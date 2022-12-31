@@ -16,6 +16,11 @@ interface Props {
 const TrackLogItem: React.FC<Props> = ({item}) => {
     return <div className={"TrackLogItem"}>
         <span>
+            <FontAwesomeIcon icon={faCalendarPlus}/>
+            {format(item.createdAt, "%H:%MM %d-%mm-%YYYY")}
+        </span>
+
+        <span>
             <FontAwesomeIcon icon={item.car_speed === 0 ? faTachometerAltAverage : faTachometerAltFast}/>
             {item.car_speed?.toFixed(1)} km/h
         </span>
@@ -27,7 +32,7 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
             {item.location_satellites === undefined || item.location_satellites === 0 ? null :
                 <>
                     {item.location_satellites} sats @&nbsp;
-                    <a href={`maps.google.com?q=${item.location_latitude},${item.location_longitude}`}>{item.location_latitude},{item.location_longitude}</a>
+                    <a href={`https://maps.google.com?q=${item.location_latitude},${item.location_longitude}`}>{item.location_latitude},{item.location_longitude}</a>
                 </>}
         </span>
 
@@ -44,11 +49,6 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
                 {format(item.location_time, "%H:%MM %d-%mm-%YYYY")}
             </span>
         }
-
-        <span>
-            <FontAwesomeIcon icon={faCalendarPlus}/>
-            {format(item.createdAt, "%H:%MM %d-%mm-%YYYY")}
-        </span>
 
     </div>;
 };
