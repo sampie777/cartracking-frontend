@@ -9,11 +9,18 @@ interface Props {
 const HomeView: React.FC<Props> = () => {
     return <div className={"home"}>
         <h1>Car</h1>
-        {!auth.isLoggedIn ? null : <a href={routes.Dashboard.path}>Dashboard</a>}
-        {!auth.isLoggedIn ?
-            <a href={`${apiHostUrl}/login`}>Log in</a> :
-            <a href={`${apiHostUrl}/logout`}>Log out</a>
+        {!auth.isLoggedIn ? null :
+            <p>
+                <a href={routes.Dashboard.path}>Dashboard</a>
+            </p>
         }
+
+        <p>
+            {!auth.isLoggedIn ?
+                <a href={`${apiHostUrl}/login`}>Log in</a> :
+                <a href={`${apiHostUrl}/logout`}>Log out</a>
+            }
+        </p>
     </div>;
 };
 

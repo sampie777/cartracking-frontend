@@ -1,0 +1,56 @@
+import React from "react";
+import {TrackLog} from "../../logic/tracks/models";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faCalendarPlus,
+    faClock, faRuler, faSatelliteDish, faSlash,
+    faTachometerAltAverage,
+    faTachometerAltFast
+} from "@fortawesome/free-solid-svg-icons";
+import {format} from "../../logic/utils";
+
+interface Props {
+    item: TrackLog
+}
+
+const TrackLogItem: React.FC<Props> = ({item}) => {
+    return <div className={"TrackLogItem"}>
+        <span>
+            <FontAwesomeIcon icon={item.car_speed === 0 ? faTachometerAltAverage : faTachometerAltFast}/>
+            {item.car_speed?.toFixed(1)} km/h
+        </span>
+
+        <span>
+            <FontAwesomeIcon icon={faSatelliteDish}/>
+            {item.location_satellites !== undefined && item.location_satellites > 0 ? null :
+                <FontAwesomeIcon icon={faSlash}/>}
+            {item.location_satellites === undefined || item.location_satellites === 0 ? null :
+                <>
+                    {item.location_satellites} sats @&nbsp;
+                    <a href={`maps.google.com?q=${item.location_latitude},${item.location_longitude}`}>{item.location_latitude},{item.location_longitude}</a>
+                </>}
+        </span>
+
+        {item.car_odometer === undefined ? null :
+            <span>
+                <FontAwesomeIcon icon={faRuler}/>
+                {item.car_odometer} km
+            </span>
+        }
+
+        {item.location_time === undefined ? null :
+            <span>
+                <FontAwesomeIcon icon={faClock}/>
+                {format(item.location_time, "%H:%MM %d-%mm-%YYYY")}
+            </span>
+        }
+
+        <span>
+            <FontAwesomeIcon icon={faCalendarPlus}/>
+            {format(item.createdAt, "%H:%MM %d-%mm-%YYYY")}
+        </span>
+
+    </div>;
+};
+
+export default TrackLogItem;

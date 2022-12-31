@@ -15,5 +15,10 @@ const get = (url: string) => fetch(url, {
 export const api = {
     users: {
         me: () => get(`${apiBaseUrl}/users/me`)
+    },
+    cars: {
+        logs: {
+            all: () => get(`${apiBaseUrl}/cars/logs`)
+        }
     }
 }
