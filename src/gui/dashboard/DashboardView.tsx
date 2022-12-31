@@ -3,6 +3,7 @@ import {TrackLog} from "../../logic/tracks/models";
 import {TrackLogs} from "../../logic/tracks/tracks";
 import TrackLogsList from "./TrackLogsList";
 import './style.sass';
+import LoadingOverlay from "../components/LoadingOverlay";
 
 interface Props {
 }
@@ -10,16 +11,19 @@ interface Props {
 const DashboardView: React.FC<Props> = () => {
     const [fetchError, setFetchError] = useState<Error | undefined>();
     const [tracks, setTracks] = useState<TrackLog[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadTrackLogs();
     }, [])
 
     const loadTrackLogs = () => {
+        setIsLoading(true);
         setFetchError(undefined)
         TrackLogs.fetchAll()
             .then(setTracks)
             .catch(setFetchError)
+            .finally(() => setIsLoading(false))
     }
 
     return <div className={"DashboardView"}>
@@ -27,7 +31,8 @@ const DashboardView: React.FC<Props> = () => {
 
         {!fetchError ? null : <div>Error: {fetchError.name}</div>}
 
-        <TrackLogsList tracks={tracks}/>
+        {!isLoading ? null : <LoadingOverlay/>}
+        {isLoading ? null : <TrackLogsList tracks={tracks}/>}
     </div>;
 };
 
