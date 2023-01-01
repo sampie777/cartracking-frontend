@@ -3,7 +3,7 @@ import {TrackLog} from "../../logic/tracks/models";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faCalendarPlus,
-    faClock, faRuler, faSatelliteDish, faSlash,
+    faClock, faMapMarkerAlt, faRoute, faRuler, faSlash,
     faTachometerAltAverage,
     faTachometerAltFast
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,13 +20,15 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
             {format(item.createdAt, "%H:%MM %d-%mm-%YYYY")}
         </span>
 
-        <span>
-            <FontAwesomeIcon icon={item.car_speed === 0 ? faTachometerAltAverage : faTachometerAltFast}/>
-            {item.car_speed?.toFixed(1)} km/h
-        </span>
+        {item.car_speed === undefined ? null :
+            <span>
+                <FontAwesomeIcon icon={item.car_speed === 0 ? faTachometerAltAverage : faTachometerAltFast}/>
+                {item.car_speed?.toFixed(1)} km/h
+            </span>
+        }
 
         <span>
-            <FontAwesomeIcon icon={faSatelliteDish}/>
+            <FontAwesomeIcon icon={faMapMarkerAlt}/>
             {item.location_satellites !== undefined && item.location_satellites > 0 ? null :
                 <FontAwesomeIcon icon={faSlash}/>}
             {item.location_satellites === undefined || item.location_satellites === 0 ? null :
@@ -40,6 +42,13 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
             <span>
                 <FontAwesomeIcon icon={faRuler}/>
                 {item.car_odometer} km
+            </span>
+        }
+
+        {item.car_odometer_start === undefined || item.car_odometer === undefined ? null :
+            <span>
+                <FontAwesomeIcon icon={faRoute}/>
+                {item.car_odometer - item.car_odometer_start} km
             </span>
         }
 
