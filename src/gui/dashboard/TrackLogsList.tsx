@@ -32,7 +32,7 @@ const TrackLogsList: React.FC<Props> = ({tracks}) => {
                 <div>
                     <div className={"sessionHeader"}
                          title={`Session id: ${session[0].session_id}`}>
-                        {format(session[0].createdAt, "%d-%m-%YYYY")}
+                        {format(session[0].createdAt + "Z", "%d-%m-%YYYY")}
                     </div>
                     {session.map(it => <TrackLogItem key={it.id} item={it}/>)}
                 </div>)

@@ -17,7 +17,7 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
     return <div className={"TrackLogItem"}>
         <span>
             <FontAwesomeIcon icon={faCalendarPlus}/>
-            {format(item.createdAt, "%H:%MM")}
+            {format(item.createdAt + "Z", "%H:%MM")}
         </span>
 
         {item.car_speed === undefined ? null :
@@ -59,7 +59,7 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
         {item.location_time === undefined ? null :
             <span>
                 <FontAwesomeIcon icon={faClock}/>
-                {format(item.location_time, "%H:%MM")}
+                {format(item.location_time + "Z", "%H:%MM")}
             </span>
         }
 
