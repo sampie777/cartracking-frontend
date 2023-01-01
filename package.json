@@ -1,6 +1,6 @@
 {
   "name": "car-tracking-frontend",
-  "version": "0.1.2",
+  "version": "0.2.0-SNAPSHOT",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
