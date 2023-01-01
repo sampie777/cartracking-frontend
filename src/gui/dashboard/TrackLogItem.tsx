@@ -34,7 +34,11 @@ const TrackLogItem: React.FC<Props> = ({item}) => {
             {item.location_satellites === undefined || item.location_satellites === 0 ? null :
                 <>
                     {item.location_satellites} sats @&nbsp;
-                    <a href={`https://maps.google.com?q=${item.location_latitude},${item.location_longitude}`}>{item.location_latitude},{item.location_longitude}</a>
+                    <a href={`https://maps.google.com?q=${item.location_latitude},${item.location_longitude}`}
+                       rel="noreferrer"
+                       target={"_blank"}>
+                        {item.location_latitude},{item.location_longitude}
+                    </a>
                 </>}
         </span>
 
