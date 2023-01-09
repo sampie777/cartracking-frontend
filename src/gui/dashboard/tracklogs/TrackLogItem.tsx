@@ -1,5 +1,5 @@
 import React from "react";
-import {TrackLog} from "../../logic/tracks/models";
+import {TrackLog} from "../../../logic/tracks/models";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faCalendarPlus,
@@ -7,7 +7,7 @@ import {
     faTachometerAltAverage,
     faTachometerAltFast
 } from "@fortawesome/free-solid-svg-icons";
-import {format} from "../../logic/utils";
+import {format} from "../../../logic/utils";
 
 interface Props {
     item: TrackLog

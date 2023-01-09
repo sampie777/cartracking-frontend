@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {TrackLog} from "../../logic/tracks/models";
 import {TrackLogs} from "../../logic/tracks/tracks";
-import TrackLogsList from "./TrackLogsList";
+import TrackLogsList from "./tracklogs/TrackLogsList";
 import './style.sass';
 import LoadingOverlay from "../components/LoadingOverlay";
 

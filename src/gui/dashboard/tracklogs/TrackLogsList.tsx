@@ -1,6 +1,7 @@
 import React from "react";
-import {TrackLog} from "../../logic/tracks/models";
+import {TrackLog} from "../../../logic/tracks/models";
 import TrackLogSession from "./TrackLogSession";
+import './style.sass';
 
 interface Props {
     tracks: TrackLog[]

@@ -1,7 +1,7 @@
 import React from "react";
-import {format} from "../../logic/utils";
+import {format} from "../../../logic/utils";
 import TrackLogItem from "./TrackLogItem";
-import {TrackLog} from "../../logic/tracks/models";
+import {TrackLog} from "../../../logic/tracks/models";
 
 interface Props {
     tracks: TrackLog[]
