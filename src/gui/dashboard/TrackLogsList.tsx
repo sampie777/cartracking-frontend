@@ -1,7 +1,6 @@
 import React from "react";
 import {TrackLog} from "../../logic/tracks/models";
-import TrackLogItem from "./TrackLogItem";
-import {format} from "../../logic/utils";
+import TrackLogSession from "./TrackLogSession";
 
 interface Props {
     tracks: TrackLog[]
@@ -27,15 +26,7 @@ const TrackLogsList: React.FC<Props> = ({tracks}) => {
 
     return <div className={"TrackLogsList"}>
         {Array.from(groupedBySession.values())
-            .filter(it => it.length > 0)
-            .map(session =>
-                <div>
-                    <div className={"sessionHeader"}
-                         title={`Session id: ${session[0].session_id}`}>
-                        {format(session[0].createdAt + "Z", "%d-%m-%YYYY")}
-                    </div>
-                    {session.map(it => <TrackLogItem key={it.id} item={it}/>)}
-                </div>)
+            .map(session => <TrackLogSession tracks={session}/>)
         }
     </div>;
 };
