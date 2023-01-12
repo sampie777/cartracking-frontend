@@ -5,6 +5,7 @@ import {TrackLog} from "../../../logic/tracks/models";
 import TrackLogMap from "./TrackLogMap";
 import RoundIconButton from "../../components/RoundIconButton";
 import {faListUl, faMapMarkedAlt, faSlash} from "@fortawesome/free-solid-svg-icons";
+import {TrackLogs} from "../../../logic/tracks/tracks";
 
 interface Props {
     tracks: TrackLog[]
@@ -22,12 +23,22 @@ const TrackLogSession: React.FC<Props> = ({
 
     if (tracks.length === 0) return null;
 
+    const firstTrack = tracks[tracks.length - 1];
+    const lastTrack = tracks[0];
     const locationTracks = tracks.filter(it => it.location_satellites != null && it.location_satellites > 1);
 
     return <div className={"TrackLogSession"}>
         <div className={"sessionHeader"}
-             title={`Session id: ${tracks[0].session_id}`}>
-            {format(tracks[0].createdAt + "Z", "%d-%m-%YYYY")}
+             title={`Session id: ${firstTrack.session_id}`}>
+            {format(firstTrack.createdAt + "Z", "%d-%m-%YYYY")}
+
+            <span className={"time"}>
+                {format(firstTrack.createdAt + "Z", "%H:%MM")}
+                {TrackLogs.areTrackTimesEqual(firstTrack, lastTrack) ? undefined : <>
+                    {" - "}
+                    {format(lastTrack.createdAt + "Z", "%H:%MM")}
+                </>}
+            </span>
         </div>
 
         <div className={"sessionActions"}>

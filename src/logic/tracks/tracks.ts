@@ -2,6 +2,7 @@ import {BoundingBoxCoords, TrackLog} from "./models";
 import {api} from "../api";
 import {throwErrorsIfNotOk} from "../apiUtils";
 import {Coords} from "google-map-react";
+import {format} from "../utils";
 
 export namespace TrackLogs {
     export const fetchAll = (): Promise<TrackLog[]> => {
@@ -86,4 +87,8 @@ export namespace TrackLogs {
 
         return Math.min(latZoom - 1, lngZoom - 1, ZOOM_MAX);
     }
+
+    export const areTrackTimesEqual = (a: TrackLog, b: TrackLog, timeFormat: string = "%H:%MM"): boolean =>
+        a === b ||
+        format(a.createdAt + "Z", timeFormat) === format(b.createdAt + "Z", timeFormat);
 }
