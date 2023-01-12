@@ -1,0 +1,35 @@
+.RoundIconButton
+  $size: 42px
+  border: 1px solid #dadada
+  display: inline-block
+  background-color: #fdfdfd
+  padding: 10px 12px
+  border-radius: $size
+  min-width: $size
+  height: $size
+  box-shadow: 0 1px 3px 0 #00000010
+  cursor: pointer
+  font-size: inherit
+  margin: 7px 5px
+
+  &:hover
+    box-shadow: 0 1px 2px 0 #00000030
+    background-color: #fafafa
+
+  &:active
+    background-color: #f4f4f4
+
+  &:disabled
+    &, &:hover, &:active
+      background-color: #ffffff
+      opacity: 0.7
+      cursor: inherit
+
+  & > .overlay
+    position: absolute
+
+  & > .label
+    padding-right: 8px
+    font-size: 0.97rem
+    top: -1px
+    opacity: 0.9

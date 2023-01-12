@@ -3,6 +3,8 @@ import {format} from "../../../logic/utils";
 import TrackLogItem from "./TrackLogItem";
 import {TrackLog} from "../../../logic/tracks/models";
 import TrackLogMap from "./TrackLogMap";
+import RoundIconButton from "../../components/RoundIconButton";
+import {faListUl, faMapMarkedAlt, faSlash} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     tracks: TrackLog[]
@@ -28,22 +30,33 @@ const TrackLogSession: React.FC<Props> = ({
             {format(tracks[0].createdAt + "Z", "%d-%m-%YYYY")}
         </div>
 
+        <div className={"sessionActions"}>
+            {locationTracks.length === 0 ? undefined :
+                <RoundIconButton icon={faMapMarkedAlt}
+                                 onClick={() => setShowMap(!showMap)}
+                                 overlayIcon={!showMap ? undefined : faSlash}
+                                 title={locationTracks.length === 0
+                                     ? "No tracks with location available"
+                                     : `${showMap ? "Hide" : "Show"} map for ${locationTracks.length} tracks`}
+                                 label={locationTracks.length === 0 ? undefined : `${locationTracks.length}x`}/>
+            }
+
+            <RoundIconButton icon={faListUl}
+                             onClick={() => setShowList(!showList)}
+                             overlayIcon={!showList ? undefined : faSlash}
+                             title={`${showList ? "Hide" : "Show"} all ${tracks.length} tracks`}
+                             label={`${tracks.length}x`}/>
+        </div>
+
         {locationTracks.length === 0 ? undefined : <div>
-            <button onClick={() => setShowMap(!showMap)}>
-                {showMap ? "Hide" : "Show"} map for {locationTracks.length} tracks
-            </button>
             {!showMap ? undefined : <TrackLogMap tracks={locationTracks}/>}
         </div>}
 
-        <button onClick={() => setShowList(!showList)}>
-            {tracks.length} tracks
-        </button>
+        {!showList ? undefined : <div>
+            {tracks.map(it => <TrackLogItem key={it.id} item={it}/>)}
+        </div>}
 
-        {!showList ? undefined :
-            <div>
-                {tracks.map(it => <TrackLogItem key={it.id} item={it}/>)}
-            </div>
-        }
+        {!showMap && !showList ? undefined : <div className={"sessionFooter"}/>}
     </div>;
 };
 
