@@ -1,11 +1,12 @@
 import {api} from "../api";
 import {throwErrorsIfNotOk} from "../apiUtils";
-import {Auth, AuthUser} from "./models";
+import {ApiKeysJson, Auth, AuthUser} from "./models";
 
-const auth = {
+const auth: Auth = {
     user: undefined,
     isLoggedIn: undefined,
-} as Auth;
+    googleApiKey: undefined,
+};
 
 export const authGetUserInfo = () => {
     return api.users.me()
@@ -14,6 +15,8 @@ export const authGetUserInfo = () => {
         .then((response: AuthUser) => {
             auth.user = response;
             auth.isLoggedIn = true;
+
+            return authGetApiKeys();
         })
         .catch(error => {
             console.error("Failed to fetch user info", error);
@@ -21,5 +24,17 @@ export const authGetUserInfo = () => {
         })
 }
 
+export const authGetApiKeys = () => {
+    return api.system.apiKeys()
+        .then(throwErrorsIfNotOk)
+        .then(response => response.json())
+        .then((response: ApiKeysJson) => {
+            auth.googleApiKey = response.googleMaps;
+        })
+        .catch(error => {
+            console.error("Failed to fetch api keys", error);
+            auth.googleApiKey = undefined;
+        })
+}
 
 export default auth;

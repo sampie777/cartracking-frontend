@@ -14,11 +14,14 @@ const get = (url: string) => fetch(url, {
 
 export const api = {
     users: {
-        me: () => get(`${apiBaseUrl}/users/me`)
+        me: () => get(`${apiBaseUrl}/users/me`),
     },
     cars: {
         logs: {
-            all: () => get(`${apiBaseUrl}/cars/logs`)
+            all: () => get(`${apiBaseUrl}/cars/logs`),
         }
-    }
+    },
+    system: {
+        apiKeys: () => get(`${apiBaseUrl}/system/api-keys`),
+    },
 }

@@ -34,4 +34,9 @@ export class AuthUser implements UserProps {
 export interface Auth {
     isLoggedIn: boolean | undefined
     user?: AuthUser
+    googleApiKey?: string
+}
+
+export class ApiKeysJson {
+    googleMaps: string | undefined
 }

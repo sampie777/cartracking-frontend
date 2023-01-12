@@ -1,3 +1,5 @@
+import {Coords} from "google-map-react";
+
 export interface TrackLog {
     uptimeMs?: number
     session_id?: number
@@ -43,4 +45,9 @@ export interface TrackLog {
     modifiedAt?: string
     createdAt?: string
     id?: number
+}
+
+export interface BoundingBoxCoords {
+    max: Coords
+    min: Coords
 }
