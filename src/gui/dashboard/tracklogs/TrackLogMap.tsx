@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TrackLogMap: React.FC<Props> = ({tracks}) => {
-    if (!tracks.some(it => it.location_satellites != null && it.location_satellites > 1)) return null;
+    if (tracks.length === 0) return null;
 
     const API_KEY = auth.googleApiKey;
     if (API_KEY == null) {
@@ -28,10 +28,9 @@ const TrackLogMap: React.FC<Props> = ({tracks}) => {
                         options={{
                             maxZoom: 18
                         }}>
-            {tracks.filter(it => it.location_satellites != null && it.location_satellites > 1)
-                .map(it => <MapMarker key={it.id}
-                                      lat={it.location_latitude ?? 0}
-                                      lng={it.location_longitude ?? 0}/>)}
+            {tracks.map(it => <MapMarker key={it.id}
+                                         lat={it.location_latitude ?? 0}
+                                         lng={it.location_longitude ?? 0}/>)}
         </GoogleMapReact>
     </div>;
 };

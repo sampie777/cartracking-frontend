@@ -114,4 +114,25 @@ export namespace TrackLogs {
             }
         ]
     }
+
+    export const isCoordinateInList = (track: TrackLog, tracks: TrackLog[]): boolean =>
+        tracks.some(it => it !== track && it.location_latitude === track.location_latitude
+            && it.location_longitude === track.location_longitude)
+
+    /**
+     * Filter all tracks with non-unique coordinates out and return the filtered list
+     * @param tracks
+     */
+    export const getTracksUniqueByCoordinates = (tracks: TrackLog[]): TrackLog[] => {
+        const result: TrackLog[] = [];
+        tracks.forEach(it => {
+            if (isCoordinateInList(it, result)) return;
+            result.push(it)
+        })
+        return result;
+    }
+    export const removeTracksWithInvalidCoordinates = (tracks: TrackLog[], minSatellites: number = 2): TrackLog[] =>
+        tracks.filter(it => it.location_satellites != null && it.location_satellites >= minSatellites)
+            .filter(it => !(it.location_latitude == null || it.location_latitude === 90 || it.location_latitude === 0
+                || it.location_longitude == null || it.location_longitude === 90 || it.location_longitude === 0))
 }

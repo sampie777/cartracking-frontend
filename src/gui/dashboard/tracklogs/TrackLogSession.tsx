@@ -17,10 +17,11 @@ const TrackLogSession: React.FC<Props> = ({
                                               tracks,
                                               showDefaultView,
                                           }) => {
-    const locationTracks = tracks.filter(it => it.location_satellites != null && it.location_satellites > 1);
+    const validLocationTracks = TrackLogs.removeTracksWithInvalidCoordinates(tracks);
+    const uniqueLocationTracks = TrackLogs.getTracksUniqueByCoordinates(validLocationTracks);
 
-    const [showMap, setShowMap] = useState(locationTracks.length > 0 && showDefaultView === true);
-    const [showChart, setShowChart] = useState(locationTracks.length === 0 && showDefaultView === true);
+    const [showMap, setShowMap] = useState(uniqueLocationTracks.length > 0 && showDefaultView === true);
+    const [showChart, setShowChart] = useState(uniqueLocationTracks.length === 0 && showDefaultView === true);
     const [showList, setShowList] = useState(false);
 
     if (tracks.length === 0) return null;
@@ -43,14 +44,14 @@ const TrackLogSession: React.FC<Props> = ({
         </div>
 
         <div className={"sessionActions"}>
-            {locationTracks.length === 0 ? undefined :
+            {uniqueLocationTracks.length === 0 ? undefined :
                 <RoundIconButton icon={faMapMarkedAlt}
                                  onClick={() => setShowMap(!showMap)}
                                  overlayIcon={!showMap ? undefined : faSlash}
-                                 title={locationTracks.length === 0
+                                 title={uniqueLocationTracks.length === 0
                                      ? "No tracks with location available"
-                                     : `${showMap ? "Hide" : "Show"} map for ${locationTracks.length} tracks`}
-                                 label={locationTracks.length === 0 ? undefined : `${locationTracks.length}x`}/>
+                                     : `${showMap ? "Hide" : "Show"} map for ${uniqueLocationTracks.length} tracks (out of ${validLocationTracks.length} location tracks)`}
+                                 label={uniqueLocationTracks.length === 0 ? undefined : `${uniqueLocationTracks.length}x`}/>
             }
 
             <RoundIconButton icon={faChartLine}
@@ -65,8 +66,8 @@ const TrackLogSession: React.FC<Props> = ({
                              label={`${tracks.length}x`}/>
         </div>
 
-        {locationTracks.length === 0 ? undefined : <div>
-            {!showMap ? undefined : <TrackLogMap tracks={locationTracks}/>}
+        {uniqueLocationTracks.length === 0 ? undefined : <div>
+            {!showMap ? undefined : <TrackLogMap tracks={uniqueLocationTracks}/>}
         </div>}
 
         {!showChart ? undefined : <TrackLogChart tracks={tracks}/>}
