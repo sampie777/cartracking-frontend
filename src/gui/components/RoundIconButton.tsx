@@ -10,12 +10,12 @@ interface Props {
 }
 
 const RoundIconButton: React.FC<Props & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>> = (props) => {
-    return <button {...props} className={"RoundIconButton"}>
+    const {overlayIcon, ...buttonProps} = props;
+    return <button {...buttonProps} className={"RoundIconButton"}>
         {props.label === undefined ? undefined : <span className={"label"}>{props.label}</span>}
         {props.overlayIcon === undefined ? undefined :
             <FontAwesomeIcon icon={props.overlayIcon} className={"overlay"}/>}
         <FontAwesomeIcon icon={props.icon}/>
-
     </button>;
 };
 
