@@ -20,6 +20,7 @@ declare module "canvasjs-react-charts" {
 
         interface ExtendedChartOptions extends ChartOptions {
             toolTip?: ExtendedChartToolTipOptions;
+            zoomType?: "x" | "y" | "xy";
         }
 
         interface ExtendedChartToolTipOptions extends ChartToolTipOptions{
