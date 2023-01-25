@@ -3,6 +3,7 @@ import {api} from "../api";
 import {throwErrorsIfNotOk} from "../apiUtils";
 import {Coords} from "google-map-react";
 import {format} from "../utils";
+import {ChartDataSeriesOptions} from "canvasjs";
 
 export namespace TrackLogs {
     export const fetchAll = (): Promise<TrackLog[]> => {
@@ -61,7 +62,7 @@ export namespace TrackLogs {
      * @param mapHeight
      */
     export const calculateZoomLevelForBoundingBox = (box: BoundingBoxCoords, mapWidth: number, mapHeight: number): number => {
-        const WORLD_DIM = { height: 256, width: 256 };
+        const WORLD_DIM = {height: 256, width: 256};
         const ZOOM_MAX = 21;
 
         function latRad(lat: number) {
@@ -91,4 +92,26 @@ export namespace TrackLogs {
     export const areTrackTimesEqual = (a: TrackLog, b: TrackLog, timeFormat: string = "%H:%MM"): boolean =>
         a === b ||
         format(a.createdAt + "Z", timeFormat) === format(b.createdAt + "Z", timeFormat);
+
+    export const generateChartData = (tracks: TrackLog[]): Array<ChartDataSeriesOptions> => {
+        const zeroHoursDate = new Date(0);
+        zeroHoursDate.setHours(0);
+
+        return [
+            {
+                type: "line",
+                markerSize: 8,
+                lineThickness: 1,
+                color: "#6d78ad",
+                dataPoints: tracks
+                    .filter(it => it.uptimeMs != null && it.car_speed != null)
+                    .map(it => {
+                        return {
+                            x: new Date(zeroHoursDate.getTime() + (it.uptimeMs ?? 0)),
+                            y: it.car_speed ?? 0,
+                        }
+                    })
+            }
+        ]
+    }
 }

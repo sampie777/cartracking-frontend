@@ -4,21 +4,25 @@ import TrackLogItem from "./TrackLogItem";
 import {TrackLog} from "../../../logic/tracks/models";
 import TrackLogMap from "./TrackLogMap";
 import RoundIconButton from "../../components/RoundIconButton";
-import {faListUl, faMapMarkedAlt, faSlash} from "@fortawesome/free-solid-svg-icons";
+import {faChartLine, faListUl, faMapMarkedAlt, faSlash} from "@fortawesome/free-solid-svg-icons";
 import {TrackLogs} from "../../../logic/tracks/tracks";
+import TrackLogChart from "./TrackLogChart";
 
 interface Props {
     tracks: TrackLog[]
     showMapInitially?: boolean
     showListInitially?: boolean
+    showChartInitially?: boolean
 }
 
 const TrackLogSession: React.FC<Props> = ({
                                               tracks,
                                               showMapInitially,
-                                              showListInitially
+                                              showListInitially,
+                                              showChartInitially,
                                           }) => {
     const [showMap, setShowMap] = useState(showMapInitially === true);
+    const [showChart, setShowChart] = useState(showChartInitially === true);
     const [showList, setShowList] = useState(showListInitially === true);
 
     if (tracks.length === 0) return null;
@@ -52,6 +56,11 @@ const TrackLogSession: React.FC<Props> = ({
                                  label={locationTracks.length === 0 ? undefined : `${locationTracks.length}x`}/>
             }
 
+            <RoundIconButton icon={faChartLine}
+                             onClick={() => setShowChart(!showChart)}
+                             overlayIcon={!showChart ? undefined : faSlash}
+                             title={`${showChart ? "Hide" : "Show"} speed chart`}/>
+
             <RoundIconButton icon={faListUl}
                              onClick={() => setShowList(!showList)}
                              overlayIcon={!showList ? undefined : faSlash}
@@ -62,6 +71,8 @@ const TrackLogSession: React.FC<Props> = ({
         {locationTracks.length === 0 ? undefined : <div>
             {!showMap ? undefined : <TrackLogMap tracks={locationTracks}/>}
         </div>}
+
+        {!showChart ? undefined : <TrackLogChart tracks={tracks}/>}
 
         {!showList ? undefined : <div>
             {tracks.map(it => <TrackLogItem key={it.id} item={it}/>)}

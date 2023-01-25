@@ -30,6 +30,7 @@ const TrackLogsList: React.FC<Props> = ({tracks}) => {
             .map((session, index) => <TrackLogSession key={session.length > 0 ? session[0].session_id : ""}
                                                       tracks={session}
                                                       showListInitially={index === 0}
+                                                      showChartInitially={index === 0}
                                                       showMapInitially={index === 0}/>)
         }
     </div>;
