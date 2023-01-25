@@ -10,26 +10,23 @@ import TrackLogChart from "./TrackLogChart";
 
 interface Props {
     tracks: TrackLog[]
-    showMapInitially?: boolean
-    showListInitially?: boolean
-    showChartInitially?: boolean
+    showDefaultView?: boolean
 }
 
 const TrackLogSession: React.FC<Props> = ({
                                               tracks,
-                                              showMapInitially,
-                                              showListInitially,
-                                              showChartInitially,
+                                              showDefaultView,
                                           }) => {
-    const [showMap, setShowMap] = useState(showMapInitially === true);
-    const [showChart, setShowChart] = useState(showChartInitially === true);
-    const [showList, setShowList] = useState(showListInitially === true);
+    const locationTracks = tracks.filter(it => it.location_satellites != null && it.location_satellites > 1);
+
+    const [showMap, setShowMap] = useState(locationTracks.length > 0 && showDefaultView === true);
+    const [showChart, setShowChart] = useState(locationTracks.length === 0 && showDefaultView === true);
+    const [showList, setShowList] = useState(false);
 
     if (tracks.length === 0) return null;
 
     const firstTrack = tracks[tracks.length - 1];
     const lastTrack = tracks[0];
-    const locationTracks = tracks.filter(it => it.location_satellites != null && it.location_satellites > 1);
 
     return <div className={"TrackLogSession"}>
         <div className={"sessionHeader"}
