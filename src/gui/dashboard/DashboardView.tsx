@@ -31,7 +31,7 @@ const DashboardView: React.FC<Props> = () => {
 
         {!fetchError ? null : <div>Error: {fetchError.name}</div>}
 
-        {!isLoading ? null : <LoadingOverlay/>}
+        {!isLoading ? null : <LoadingOverlay backgroundColor={"#ffffff00"}/>}
         {isLoading ? null : <TrackLogsList tracks={tracks}/>}
     </div>;
 };

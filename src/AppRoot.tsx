@@ -23,7 +23,7 @@ const AppRoot = () => {
     }
 
     if (!isAuthLoaded) {
-        return <LoadingOverlay/>;
+        return <LoadingOverlay backgroundColor={"#ffffff00"}/>;
     }
 
     return <ErrorBoundary>

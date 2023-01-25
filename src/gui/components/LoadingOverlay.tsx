@@ -8,17 +8,22 @@ interface Props {
     absolutePositioning?: boolean
     text?: string
     title?: string
+    backgroundColor?: string
 }
 
 const LoadingOverlay: React.FC<Props> = ({
                                              isLoading,
                                              absolutePositioning,
                                              text,
-                                             title
+                                             title,
+                                             backgroundColor
                                          }) => {
     if (isLoading === false) return null;
 
-    return <div className={`LoadingOverlay ${absolutePositioning ? "absolute" : ""}`}>
+    return <div className={`LoadingOverlay ${absolutePositioning ? "absolute" : ""}`}
+                style={{
+                    backgroundColor: backgroundColor != null ? backgroundColor : undefined
+                }}>
         <div className={"content"}>
             <FontAwesomeIcon icon={faSpinner} title={title}/>
             <div className={"text"}>
